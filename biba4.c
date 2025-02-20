@@ -13,6 +13,21 @@ void Hero_(struct Hero* hero){
     (*hero).r = 30;
 }
 
+void Hero_move(struct Hero* hero){
+    if (IsKeyDown(KEY_LEFT)){
+        (*hero).x = (*hero).x - 5;
+    }
+    if (IsKeyDown(KEY_RIGHT)){
+        (*hero).x = (*hero).x + 5;
+    }
+    if (IsKeyDown(KEY_UP)){
+        (*hero).y = (*hero).y - 5;
+    }
+    if (IsKeyDown(KEY_DOWN)){
+        (*hero).y = (*hero).y + 5;
+    }
+}
+
 void Hero_draw(struct Hero* hero){
     DrawCircle((*hero).x, (*hero).y, (*hero).r, WHITE);
 }
@@ -25,6 +40,7 @@ int main(void){
     Hero_(&hero0);
 
     while(! WindowShouldClose()){
+        Hero_move(&hero0);
         BeginDrawing();
             Hero_draw(&hero0);
         EndDrawing();
