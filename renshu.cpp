@@ -1,32 +1,33 @@
 // c++ renshu.cpp && ./a.out
 #include <stdio.h>
+#include "勝山クラブ.h"
 
-struct 敵{
-    int x;
-    int y;
-    int hp;
+箱の形 敵{
+    整数 x;
+    整数 y;
+    整数 hp;
 
-    敵(int x, int y, int hp){
-        (*this).x = x;
-        (*this).y = y;
-        (*this).hp = hp;
+    敵(整数 x, 整数 y, 整数 hp){
+        それ.x = x;
+        それ.y = y;
+        それ.hp = hp;
     }
 
-    void ダメージ(int 量){
-        (*this).hp = (*this).hp - 量;
+    おみやげなし ダメージ(int 量){
+        それ.hp = それ.hp - 量;
     }
 
-    void 合体(敵* あいて){
-        (*this).hp = (*this).hp + (*あいて).hp;
+    おみやげなし 合体(敵* あいて){
+        それ.hp = それ.hp + (*あいて).hp;
         (*あいて).hp = 0;
     }
 
-    void hpを見せる(){
+    おみやげなし hpを見せる(){
         printf("teki hp:%d\n", (*this).hp);
     }
 };
 
-int main(){
+整数 main(){
     敵 敵A(100,150,10);
     敵A.hpを見せる();
     敵A.ダメージ(3);
@@ -44,5 +45,5 @@ int main(){
 
     敵B.hpを見せる();
 
-    return 0;
+    戻る 0;
 }
