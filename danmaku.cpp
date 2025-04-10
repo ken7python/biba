@@ -1,6 +1,7 @@
 // c++ -std=c++11 danmaku.cpp -lraylib && ./a.out
 // c++ -std=c++11 danmaku.cpp -lraylib -framework Cocoa -framework IOKit && ./a.out
 // c++ -std=c++11 danmaku.cpp librailib.a -framework Cocoa -framework IOKit && ./a.out
+//次回 当たり判定
 #include "raylib.h"
 #include <vector>
 
