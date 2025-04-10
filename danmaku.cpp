@@ -1,24 +1,32 @@
 // c++ -std=c++11 danmaku.cpp -lraylib && ./a.out
 // c++ -std=c++11 danmaku.cpp -lraylib -framework Cocoa -framework IOKit && ./a.out
+// c++ -std=c++11 danmaku.cpp librailib.a -framework Cocoa -framework IOKit && ./a.out
 #include "raylib.h"
 #include <vector>
+
+struct 弾;
+std::vector<弾*> 弾たち;
 
 struct 弾{
     int x;
     int y;
     int sx; //x方向のスピード
     int sy; //y方向のスピード
-    void 動け(){
+    int 動け(){
         x = x + sx;
         y = y + sy;
+        if (x < 0 || 800 < x || y < 0 || 450 < y){
+            //画面の外に出た
+            return 0;
+        }
+        return 1;
     }
     void draw(){
         DrawCircle(x, y, 5, YELLOW);
     }
 };
 
-//弾* tama = nullptr;
-std::vector<弾*> 弾たち;
+
 
 struct てき{
     int x;
@@ -54,8 +62,13 @@ int main(){
         {
             auto i = 弾たち.begin();
             while(i != 弾たち.end()){
-                (**i).動け();
-                i = i + 1;
+                int まだいる = (**i).動け();
+                if (まだいる == 0){
+                    delete *i;
+                    i = 弾たち.erase(i);
+                }else{
+                    i = i + 1;
+                }
             }
         }
 
