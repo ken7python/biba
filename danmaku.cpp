@@ -1,4 +1,4 @@
-//% c++ -std=c++11 danmaku2.cpp libraylib.a -framework Cocoa -framework IOKit
+//% c++ -std=c++11 danmaku.cpp libraylib.a -framework Cocoa -framework IOKit
 #include "raylib.h"
 #include <vector>
 
@@ -32,7 +32,7 @@ struct 主人公{
         }
     }
     void draw(){
-        DrawCircle(x, y, 12, WHITE);
+        DrawCircle(x, y, 12, RAYWHITE);
         //DrawRectangle(x-6, y-6, 12, 12, YELLOW);
     }
 };
@@ -61,7 +61,7 @@ struct 弾{
         );
     }
     void draw(){
-        DrawCircle(x, y, 5, YELLOW);
+        DrawCircle(x, y, 5, RED);
     }
 };
 
@@ -116,7 +116,7 @@ struct てき{
         }
     }
     void draw(){    //描く
-        DrawCircle(x, y, 20, BROWN);
+        DrawCircle(x, y, 20, YELLOW);
     }
 };
 
@@ -129,12 +129,30 @@ int main(){
     Music bgm = LoadMusicStream("BGM.mp3");
     Sound gameover = LoadSound("gameover.mp3");
 
+    float hiscore = -0.01;
+
+
+TITLE:
+    while(! WindowShouldClose() ) {
+        if (IsKeyPressed(KEY_SPACE)) {
+            goto START;
+        }
+        BeginDrawing();
+            ClearBackground(BLACK);
+            DrawTexture(bg, 0, 0, WHITE);
+            DrawText("PRESS SPACE KEY", 100, 225, 60, WHITE);
+        EndDrawing();
+    }
+
 START:
     PlayMusicStream(bgm);
     float time0 = GetTime();
-    弾たち.clear();    
+    弾たち.clear();//ほんとは各弾をdeleteしてから    
     主人公 shujin0{ 400, 400 };
-    てき teki0{ 400, 225, 1, 1, 21, 21, 0, 0 };
+
+    int teki0_xs = GetRandomValue(0, 1) * 2 - 1;
+    int teki0_ys = GetRandomValue(0, 1) * 2 - 1;
+    てき teki0{ 400, 225, teki0_xs, teki0_ys, 21, 21, 0, 0 };
 
     int kaisu = 0;
     while( !WindowShouldClose() ){
@@ -177,6 +195,12 @@ START:
 
             DrawText(TextFormat("%0.2f", GetTime() - time0), 10, 10, 20, WHITE);
 
+            if (hiscore < 0.0){
+                DrawText(TextFormat("---"), 750, 10, 20, WHITE);
+            }else{
+                DrawText(TextFormat("%0.2f", hiscore), 750, 10, 20, WHITE);
+            }
+
             teki0.draw();
 
             {auto i = 弾たち.begin();
@@ -188,11 +212,15 @@ START:
             shujin0.draw();
         EndDrawing();
     }
-
+GAMEOVER:
     // gameover
     StopMusicStream(bgm);
     PlaySound(gameover);
     float time = GetTime() - time0;
+    
+    if (hiscore < time) {
+        hiscore = time;
+    }
     while(! WindowShouldClose() ){
         if (IsKeyPressed(KEY_SPACE)) {
             goto START;
@@ -203,6 +231,8 @@ START:
 
             DrawText(TextFormat("%0.2f", time), 10, 10, 20, WHITE);
 
+            DrawText(TextFormat("%0.2f", hiscore), 750, 10, 20, WHITE);
+
             teki0.draw();
 
             {auto i = 弾たち.begin();
@@ -212,6 +242,10 @@ START:
             }}
 
             shujin0.draw();
+
+            if (time == hiscore) {
+                DrawText("!!!HIGH SCORE!!!", 167, 150, 60, RED);
+            }
             DrawText("PRESS SPACE KEY", 100, 225, 60, WHITE);
         EndDrawing();
     }
