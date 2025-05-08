@@ -3,3 +3,6 @@ background.png
 a.out
 .DS_Store
 gameover.mp3
+
+libraylib_web.a
+raylib.h
