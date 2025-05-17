@@ -43,6 +43,12 @@ c++ -std=c++11 danmaku.cpp libraylib.a -framework Cocoa -framework IOKit
 ## その他
 その他、プログミングクラブで使用したC/C++の練習コードも公開しています。
 
+## 音楽素材
+BGM：魔王魂（https://maou.audio/ ）
+
+効果音：効果音ラボ（https://soundeffect-lab.info/ ）
+
+※いずれも各サイトの利用規約に従って使用しています。
 ## ライセンス
 
 このプロジェクトはMITライセンスです。
